@@ -1,6 +1,6 @@
 {
     "gameId": "ciel-minigame-template",
-    "productName": "Traffic Jam",
+    "productName": "CIEL Web Game",
     "companyName": "CIEL Tech",
     "version": "1.0.0",
     "bundleVersion": "1",
@@ -19,12 +19,12 @@
         "Assets/Screenshots/screenshot2.png"
     ],
     "playerSettings": {
-        "defaultScreenWidth": 600,
-        "defaultScreenHeight": 960,
+        "defaultScreenWidth": 960,
+        "defaultScreenHeight": 600,
         "runInBackground": true,
         "webGLTemplate": "PROJECT:AdSupportedTemplate",
-        "webGLCompressionFormat": 1,
-        "defaultWebScreenOrientation": "Portrait"
+        "webGLCompressionFormat": 0,
+        "defaultWebScreenOrientation": "Landscape"
     },
     "adsConfig": {
         "testMode": true,
