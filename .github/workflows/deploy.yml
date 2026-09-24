@@ -1,0 +1,102 @@
+name: Build and Deploy Web Games Pipeline
+
+on:
+  push:
+    branches:
+      - '*'
+      - '!gh-pages'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  # ==========================================
+  # JOB 1: Game Branch Push -> Build WebGL & Deploy Subfolder
+  # ==========================================
+  build-and-deploy-game:
+    if: github.ref_name != 'main' && github.ref_name != 'master'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 1. Checkout Code
+        uses: actions/checkout@v4
+
+      - name: 2. Cache Unity Library Folder
+        uses: actions/cache@v4
+        with:
+          path: Library
+          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-
+
+      - name: 3. Build Unity WebGL Game
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          targetPlatform: WebGL
+          buildName: ${{ github.ref_name }}
+          customParameters: -executeMethod CIEL.WebGames.Editor.GameConfigManager.BuildWebGLProject -customBuildPath build/WebGL
+
+      - name: 4. Ensure .nojekyll File
+        run: |
+          mkdir -p build/WebGL
+          touch build/WebGL/.nojekyll
+
+      - name: 5. Deploy WebGL Build to Branch Subfolder on gh-pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: build/WebGL
+          target-folder: ${{ github.ref_name }}
+          branch: gh-pages
+          clean: false
+
+      - name: 6. Checkout gh-pages Branch to Register Game in Portal
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: gh-pages-repo
+
+      - name: 7. Run Catalog Updater Script
+        env:
+          BRANCH_NAME: ${{ github.ref_name }}
+          CONFIG_PATH: game-config.json
+          GAMES_JSON_PATH: gh-pages-repo/games.json
+        run: |
+          python3 .github/scripts/update_catalog.py
+
+      - name: 8. Commit & Push Updated games.json to gh-pages
+        run: |
+          cd gh-pages-repo
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add games.json
+          git status
+          git commit -m "auto-catalog: register game build for branch '${{ github.ref_name }}'" || echo "No changes to commit"
+          git push origin gh-pages
+
+  # ==========================================
+  # JOB 2: Main Branch Push -> Deploy Central Portal (Root)
+  # ==========================================
+  deploy-portal:
+    if: github.ref_name == 'main' || github.ref_name == 'master'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 1. Checkout Code
+        uses: actions/checkout@v4
+
+      - name: 2. Prepare Portal Folder
+        run: |
+          mkdir -p Portal
+          touch Portal/.nojekyll
+
+      - name: 3. Deploy Portal Interface to Root of gh-pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: Portal
+          target-folder: .
+          branch: gh-pages
+          clean: false

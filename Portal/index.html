@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIEL Web Games Catalog | Play Free WebGL Games</title>
+    <meta name="description" content="Discover and play high-performance WebGL mini-games with responsive layouts and interactive gameplay powered by CIEL Tech.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="portal.css">
+</head>
+<body>
+    <div class="glow-bg"></div>
+
+    <!-- Header Navigation -->
+    <header class="navbar">
+        <div class="logo-container">
+            <div class="logo-icon">🎮</div>
+            <div class="logo-text">
+                <span class="brand-title">CIEL <span class="accent-text">GAMES</span></span>
+                <span class="brand-subtitle">WebGL Mini-Game Catalog</span>
+            </div>
+        </div>
+        <div class="search-bar">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="searchInput" placeholder="Search games by name, category, or tag...">
+        </div>
+        <div class="header-badges">
+            <span class="badge h5-badge">
+                <span class="pulse-dot"></span> Google H5 Ads Ready
+            </span>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Play Free <span class="gradient-text">WebGL Games</span></h1>
+            <p class="hero-subtitle">High-speed mini-games built with Unity WebGL & optimized for instant browser play on Mobile and Desktop.</p>
+        </div>
+    </section>
+
+    <!-- Filters & Controls -->
+    <section class="controls-section">
+        <div class="category-filters" id="categoryFilters">
+            <button class="filter-btn active" data-category="all">All Games</button>
+            <button class="filter-btn" data-category="Arcade">Arcade</button>
+            <button class="filter-btn" data-category="Racing">Racing</button>
+            <button class="filter-btn" data-category="Puzzle">Puzzle</button>
+            <button class="filter-btn" data-category="Casual">Casual</button>
+            <button class="filter-btn" data-category="Action">Action</button>
+        </div>
+        <div class="games-counter">
+            Showing <span id="gameCount">0</span> WebGL Games
+        </div>
+    </section>
+
+    <!-- Main Games Grid -->
+    <main class="games-container">
+        <div class="games-grid" id="gamesGrid">
+            <!-- Dynamic game cards rendered here -->
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state hidden" id="emptyState">
+            <div class="empty-icon">🎯</div>
+            <h3>No Games Found</h3>
+            <p>Try adjusting your search or category filter to discover available WebGL games.</p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 CIEL Tech. All rights reserved. WebGL Catalog CI/CD Automated Engine.</p>
+            <div class="footer-links">
+                <a href="https://github.com" target="_blank" class="footer-link">GitHub Repository</a>
+                <span class="footer-dot">•</span>
+                <span class="footer-status">Auto-Deployed via GitHub Actions</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="portal.js"></script>
+</body>
+</html>
