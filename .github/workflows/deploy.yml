@@ -39,7 +39,8 @@ jobs:
         with:
           targetPlatform: WebGL
           buildName: ${{ github.ref_name }}
-          customParameters: -executeMethod CIEL.WebGames.Editor.GameConfigManager.BuildWebGLProject -customBuildPath build/WebGL
+          buildMethod: CIEL.WebGames.Editor.GameConfigManager.BuildWebGLProject
+          customParameters: -customBuildPath build/WebGL
 
       - name: 4. Ensure .nojekyll File
         run: |
