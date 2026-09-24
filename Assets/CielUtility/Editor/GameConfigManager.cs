@@ -216,7 +216,17 @@ namespace CIEL.WebGames.Editor
         {
             ApplyConfigToPlayerSettingsSilent();
 
-            string buildPath = "WebGamesCatalouge-Builds";
+            string buildPath = "build/WebGL";
+            string[] args = System.Environment.GetCommandLineArgs();
+            for (int i = 0; i < args.Length; i++)
+            {
+                if (args[i] == "-customBuildPath" && i + 1 < args.Length)
+                {
+                    buildPath = args[i + 1];
+                    break;
+                }
+            }
+
             if (!Directory.Exists(buildPath))
             {
                 Directory.CreateDirectory(buildPath);
@@ -230,7 +240,7 @@ namespace CIEL.WebGames.Editor
             if (scenes.Length == 0)
             {
                 Debug.LogError("[GameConfigManager] No enabled scenes found in Build Settings!");
-                return;
+                throw new Exception("[GameConfigManager] No enabled scenes found in Build Settings!");
             }
 
             BuildPlayerOptions options = new BuildPlayerOptions
@@ -260,6 +270,7 @@ namespace CIEL.WebGames.Editor
             else
             {
                 Debug.LogError($"[GameConfigManager] WebGL Build failed with result: {summary.result}");
+                throw new Exception($"[GameConfigManager] WebGL Build failed with result: {summary.result}");
             }
         }
 
