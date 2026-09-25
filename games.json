@@ -1,1 +1,20 @@
-[]
+[
+  {
+    "gameId": "ciel-minigame-template",
+    "productName": "CIEL Web Game",
+    "description": "High-performance WebGL mini-game template with Google Ads, responsive layout, and two-way browser communication.",
+    "category": "Arcade",
+    "tags": [
+      "webgl",
+      "html5",
+      "unity",
+      "arcade",
+      "casual"
+    ],
+    "branch": "3dEndlessRunner",
+    "path": "3dEndlessRunner/",
+    "icon": "3dEndlessRunner/TemplateData/favicon.ico",
+    "adsSupported": true,
+    "lastUpdated": "2026-09-25"
+  }
+]
