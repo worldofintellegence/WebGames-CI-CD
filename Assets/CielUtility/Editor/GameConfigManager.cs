@@ -152,8 +152,9 @@ namespace CIEL.WebGames.Editor
                 PlayerSettings.WebGL.template = config.playerSettings.webGLTemplate;
             }
 
-            // WebGL Compression
+            // WebGL Compression & Fallback
             PlayerSettings.WebGL.compressionFormat = (WebGLCompressionFormat)config.playerSettings.webGLCompressionFormat;
+            PlayerSettings.WebGL.decompressionFallback = true;
 
             // App Icon
             if (!string.IsNullOrEmpty(config.icon))
@@ -292,6 +293,7 @@ namespace CIEL.WebGames.Editor
             }
 
             PlayerSettings.WebGL.compressionFormat = (WebGLCompressionFormat)config.playerSettings.webGLCompressionFormat;
+            PlayerSettings.WebGL.decompressionFallback = true;
 
             if (!string.IsNullOrEmpty(config.icon))
             {
