@@ -42,8 +42,9 @@ jobs:
           buildMethod: CIEL.WebGames.Editor.GameConfigManager.BuildWebGLProject
           customParameters: -customBuildPath build/WebGL
 
-      - name: 4. Ensure .nojekyll File
+      - name: 4. Fix Build Permissions & Ensure .nojekyll File
         run: |
+          sudo chown -R $USER:$USER build/WebGL || true
           mkdir -p build/WebGL
           touch build/WebGL/.nojekyll
 
