@@ -62,8 +62,13 @@ jobs:
         run: |
           python3 .github/scripts/update_catalog.py
           mkdir -p gh-pages-repo/${{ github.ref_name }}
-          cp -r build/WebGL/* gh-pages-repo/${{ github.ref_name }}/
+          if [ -d "build/WebGL/${{ github.ref_name }}" ]; then
+            cp -r build/WebGL/${{ github.ref_name }}/* gh-pages-repo/${{ github.ref_name }}/
+          else
+            cp -r build/WebGL/* gh-pages-repo/${{ github.ref_name }}/
+          fi
           touch gh-pages-repo/.nojekyll
+          touch gh-pages-repo/${{ github.ref_name }}/.nojekyll
 
       - name: 7. Deploy WebGL Game & Updated Catalog to gh-pages
         uses: JamesIves/github-pages-deploy-action@v4
